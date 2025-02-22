@@ -1,6 +1,6 @@
 from math import dist
 
-
+# Определяет который кластер, номер кластера
 def which_cluster1(point):
     x, y = point
     if y - 5 < 0:
@@ -9,7 +9,7 @@ def which_cluster1(point):
         return 1
     return 2
 
-
+# Определяет который кластер, номер кластера
 def which_cluster2(point):
     x, y = point
     if x - 10 > 0:
@@ -23,9 +23,10 @@ def which_cluster2(point):
             return 3
         return 4
 
-
+# Получает центр кластера
 def get_centroids(clusters):
     centroids = []
+    # Цикл по кластерам
     for cl in clusters:
         dmin = 10 ** 10000
         for p in cl:
@@ -36,17 +37,27 @@ def get_centroids(clusters):
         centroids.append(c)
     px = 100_000 * sum(p[0] for p in centroids) / len(centroids)
     py = 100_000 * sum(p[1] for p in centroids) / len(centroids)
+    # Возвращает центр
     return int(px), int(py)
 
-
+# Кластеры для 1-й задачи
 clusters = [[], [], []]
 for line in open('27a.txt'):
+    # Точка из файла переводится в массив
     p = [float(d) for d in line.replace(',', '.').split()]
-    clusters[which_cluster1(p)].append(p)
+    # Определяет номер кластера куда относится точка-звезда
+    cluster_num = which_cluster1(p)
+    # Добавляет точку-звезду к кластеру
+    clusters[cluster_num].append(p)
 print(*get_centroids(clusters))
 
+# Кластеры для 2-й задачи
 clusters = [[], [], [], [], []]
 for line in open('27b.txt'):
+    # Точка из файла переводится в массив
     p = [float(d) for d in line.replace(',', '.').split()]
-    clusters[which_cluster2(p)].append(p)
+    # Определяет номер кластера куда относится точка-звезда
+    cluster_num = which_cluster2(p)
+    # Добавляет точку-звезду к кластеру
+    clusters[cluster_num].append(p)
 print(*get_centroids(clusters))
