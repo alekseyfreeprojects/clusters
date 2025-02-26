@@ -36,16 +36,23 @@ def get_centroids(clusters):
     centroids = []
     # Цикл по кластерам
     for cl in clusters:
+        #Находит минимальный диаметр
         dmin = 10 ** 10000
+        # Цикл по кластерам
         for p in cl:
+            # Сумма всех диаметров одного кластера
             d = sum(dist(p, pt) for pt in cl)
             if d < dmin:
+                # Находит минимальный диаметр. Но он нужен только для определения центра
                 dmin = d
+                # Фиксирует звезду-точку минимального даметра
                 c = p
+        # Центр минимального даметра добавляет
         centroids.append(c)
-    px = 100_000 * sum(p[0] for p in centroids) / len(centroids)
-    py = 100_000 * sum(p[1] for p in centroids) / len(centroids)
-    # Возвращает центр
+    # Находит центр с учетом центров минимального диаметра. Это результат
+    px = 100_000 * sum(p[0] for p in centroids) / len(centroids)  # Суммирует центры и делит на количество точек
+    py = 100_000 * sum(p[1] for p in centroids) / len(centroids)  # Суммирует центры и делит на количество точек
+    # Возвращает центр. Это результат
     return int(px), int(py)
 
 # Кластеры для 1-й задачи
